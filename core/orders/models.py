@@ -1,12 +1,13 @@
 from django.db import models
 from shop.models import Product  # Бектемир
+from users.models import MyUser # Bektemir
 
 
 class Order(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     name = models.CharField("Клиент", max_length=100)
     email = models.EmailField("Email клиента")
     phone = models.CharField("Телефон", max_length=30, blank=True)
-
     created_at = models.DateTimeField("Дата заказа", auto_now_add=True)
     status = models.CharField(
         "Статус заказа",
@@ -46,4 +47,5 @@ class OrderItem(models.Model):
         verbose_name_plural = "Позиции заказа"
 
     def __str__(self):
-        return f"{self.quantity} × {self.product.name}"
+        return f"{self.quantity} × {self.product.title}"
+
