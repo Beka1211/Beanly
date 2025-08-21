@@ -10,9 +10,6 @@ class OrderListCreateView(generics.ListCreateAPIView):
             return Order.objects.all()
         return Order.objects.filter(user=user)
 
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
-
 class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
