@@ -3,15 +3,17 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Order
 from .serializers import OrderSerializer
 
-
-# Список заказов и создание нового заказа (только для авторизованных)
 class OrderListCreateView(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated] # только авторизованные могут видеть/создавать
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return Order.objects.all()
+        return Order.objects.filter(user=user)
 
-# Детальный просмотр: нужен для того, чтобы редактировать и удалять конкретный заказ
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
 class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated] # только авторизованные могут редактировать/удалять 
+    permission_classes = [IsAuthenticated]

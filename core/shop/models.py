@@ -1,5 +1,6 @@
 from django.db import models
-from core.users.models import MyUser
+from users.models import MyUser
+
 
 class Brand(models.Model):
     title = models.CharField(max_length=100)
