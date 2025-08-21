@@ -1,14 +1,14 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .selializers import UserRegisterSerializer
+from .serializers import UserRegisterSerializer
 
 
 class UserRegisterView(APIView):
     def post(self, request):
-        serializers = UserRegisterSerializer(data=request.data)
+        serializer = UserRegisterSerializer(data=request.data)
 
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data, status.HTTP_201_CREATED)
-        return Response(status.HTTP_BAD_REQUEST)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+
 
 class MyUserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
-
         user = self.model(
             username=username,
             email=email,
@@ -18,6 +18,7 @@ class MyUserManager(BaseUserManager):
             email=email,
         )
         user.is_admin = True
+        user.is_active = True
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -34,15 +35,16 @@ class MyUser(AbstractBaseUser):
         upload_to='user_image',
         blank=True,
         null=True,
-        )
+    )
     address = models.CharField(max_length=200)
 
     is_admin = models.BooleanField(default=False)
-    created_date = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
     objects = MyUserManager()
 
-    USERNAME_FIELD='email'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
     def __str__(self):
