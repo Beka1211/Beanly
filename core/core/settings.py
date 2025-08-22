@@ -19,8 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'rest_framework',
-        'drf_yasg',
-
+    'drf_yasg',
     'shop',
     'orders',
     'users',
@@ -107,6 +106,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_ROOT = 'media/'
 MEDIA_URL = '/media/'
