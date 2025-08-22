@@ -4,15 +4,14 @@ from django.conf.global_settings import AUTH_USER_MODEL
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Загружаем .env из корня проекта
+load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
 DATABASE_URL = os.getenv('DATABASE_URL')
-
 
 ALLOWED_HOSTS = []
 
@@ -59,6 +58,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
+
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
@@ -116,7 +116,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_ROOT = 'media/'
 MEDIA_URL = '/media/'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
