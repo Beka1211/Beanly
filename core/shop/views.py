@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg.utils import swagger_auto_schema
 
 from .models import Product, Brand,Category,Review
 from .serializers import ProductSerializer, BrandSerializer, CategorySerializer,ReviewSerializer
@@ -12,6 +13,7 @@ from .pagination import ProductPagination
 class IndexView(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    @swagger_auto_schema(responses={200: ProductSerializer()})
     def get(self, request):
         products = ProductSerializer(Product.objects.all(), many=True).data
         brands = BrandSerializer(Brand.objects.all(), many=True).data

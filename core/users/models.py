@@ -34,12 +34,11 @@ class MyUser(AbstractBaseUser):
     avatar = models.ImageField(
         upload_to='user_image',
         blank=True,
-        null=True,
-    )
-    address = models.CharField(max_length=200)
-
-    is_admin = models.BooleanField(default=False)
+        null=True,)
     is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    address = models.CharField(max_length=200)
+    is_admin = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
     objects = MyUserManager()
