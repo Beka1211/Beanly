@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -14,8 +13,6 @@ DEBUG = os.getenv('DEBUG') == 'True'
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 ALLOWED_HOSTS = ['bellkd.pythonanywhere.com', '127.0.0.1', 'localhost']
-
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -122,3 +119,10 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.MyUser'
+
+# Swagger settings 
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'LOGIN_URL': None,
+    'LOGOUT_URL': None,
+}
