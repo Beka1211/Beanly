@@ -1,9 +1,5 @@
 from django.db import models
 from users.models import MyUser
-<<<<<<< HEAD
-=======
-
->>>>>>> 493854527fc6252d2ad2e895614276015913cfab
 
 class Brand(models.Model):
     title = models.CharField(max_length=100)
