@@ -6,14 +6,15 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Загружаем .env из корня проекта
+
 load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
 DATABASE_URL = os.getenv('DATABASE_URL')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bellkd.pythonanywhere.com']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
