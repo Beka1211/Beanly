@@ -13,7 +13,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
 DATABASE_URL = os.getenv('DATABASE_URL')
 
-ALLOWED_HOSTS = ['bellkd.pythonanywhere.com']
+ALLOWED_HOSTS = ['bellkd.pythonanywhere.com', '127.0.0.1', 'localhost']
+
 
 
 INSTALLED_APPS = [
