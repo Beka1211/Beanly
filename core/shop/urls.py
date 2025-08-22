@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from .views import (
     IndexView,
@@ -17,4 +19,4 @@ urlpatterns = [
     path("brands/", BrandListView.as_view(), name="brand-list"),
     path("reviews/", ReviewListCreateView.as_view(), name="review-list"),
     path("reviews/<int:pk>/", ReviewDetailView.as_view(), name="review-detail"),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
