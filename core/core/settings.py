@@ -1,12 +1,18 @@
 from datetime import timedelta
 from pathlib import Path
 from django.conf.global_settings import AUTH_USER_MODEL
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-uzh-7_@m#ayi%%7qnf^xfur3fjy(6918c9wyji*-6b0l&humxt'
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG') == 'True'
+DATABASE_URL = os.getenv('DATABASE_URL')
 
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -17,9 +23,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_filters',
+    
     'rest_framework',
-        'drf_yasg',
+    'django_filters',
+    'drf_yasg',
 
     'shop',
     'orders',

@@ -1,3 +1,4 @@
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
@@ -7,6 +8,11 @@ from .models import Order
 from .serializers import OrderSerializer
 
 class OrderListCreateView(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+
     def get_queryset(self):
         user = self.request.user
         if user.is_staff:
@@ -18,6 +24,12 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
+
+@swagger_auto_schema(
+    method='post',
+    operation_description="Оплата заказа",
+    responses={200: OrderSerializer()}
+)
 @api_view(['POST'])
 def pay_order(request, pk):
     try:
