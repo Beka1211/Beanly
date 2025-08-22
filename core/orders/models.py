@@ -5,27 +5,19 @@ from users.models import MyUser # Bektemir
 
 class Order(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    name = models.CharField("Клиент", max_length=100)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
     email = models.EmailField("Email клиента")
     phone = models.CharField("Телефон", max_length=30, blank=True)
     created_at = models.DateTimeField("Дата заказа", auto_now_add=True)
-    status = models.CharField(
-        "Статус заказа",
-        max_length=20,
-        choices=[
-            ("pending", "В обработке"),
-            ("paid", "Оплачен"),
-            ("shipped", "Доставлен"),
-        ],
-        default="pending"
-    )
+    status = models.CharField(max_length=20, default='pending')
+    payment_transaction_id = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
 
     def __str__(self):
-        return f"Заказ №{self.id} от {self.name}"
+        return f"Заказ №{self.id} от {self.user}"
 
 
 class OrderItem(models.Model):

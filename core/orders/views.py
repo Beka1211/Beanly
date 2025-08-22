@@ -1,5 +1,8 @@
 from rest_framework import generics
+from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
 from .models import Order
 from .serializers import OrderSerializer
 
@@ -14,3 +17,22 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
+
+@api_view(['POST'])
+def pay_order(request, pk):
+    try:
+        order = Order.objects.get(pk=pk, user=request.user)
+    except Order.DoesNotExist:
+        return Response({"error": "Order not found"}, status=404)
+
+    if order.status == 'paid':
+        return Response({"error": "Already paid"}, status=400)
+
+    order.status = 'paid'
+    order.payment_transaction_id = f"TEST-{order.id}"
+    order.save()
+
+    return Response({
+        "status": "success",
+        "transaction_id": order.payment_transaction_id
+    })
