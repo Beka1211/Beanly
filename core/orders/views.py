@@ -9,13 +9,23 @@ from .serializers import OrderSerializer
 
 
 class OrderListCreateView(generics.ListCreateAPIView):
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
-
-
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
+
+    @swagger_auto_schema(
+        operation_description="Получить список заказов текущего пользователя или создать новый заказ",
+        responses={200: OrderSerializer(many=True)}
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_description="Создать новый заказ",
+        responses={201: OrderSerializer()}
+    )
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
 
     def get_queryset(self):
         user = self.request.user
@@ -29,10 +39,17 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(
+        operation_description="Получить, обновить или удалить конкретный заказ",
+        responses={200: OrderSerializer()}
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
 
 @swagger_auto_schema(
     method='post',
-    operation_description="Оплата заказа",
+    operation_description="Оплата заказа по ID",
     responses={200: OrderSerializer()}
 )
 @api_view(['POST'])
