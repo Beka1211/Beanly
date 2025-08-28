@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85e3010f-86e6-4365-8d67-e90d388c48a6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/core/orders/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/orders/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/orders/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/orders/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="85e3010f-86e6-4365-8d67-e90d388c48a6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
