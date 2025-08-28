@@ -8,4 +8,4 @@ urlpatterns = [
     path('order-items/', views.OrderItemListView.as_view(), name='orderitem-list'),
     path('order-items/<int:pk>/', views.OrderItemDetailView.as_view(), name='orderitem-detail')
     
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
