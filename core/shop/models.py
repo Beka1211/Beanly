@@ -24,6 +24,8 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
     is_available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    ingredients = models.JSONField(default=list, blank=True, null=True)
+
 
     def __str__(self):
         return self.title
