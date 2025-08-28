@@ -1,6 +1,6 @@
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -56,6 +56,7 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     responses={200: OrderSerializer()}
 )
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])   # 👈 добавлено
 def pay_order(request, pk):
     try:
         order = Order.objects.get(pk=pk, user=request.user)
