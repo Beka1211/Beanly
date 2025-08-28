@@ -4,8 +4,8 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import Order
-from .serializers import OrderSerializer
+from .models import Order, OrderItem
+from .serializers import OrderSerializer, OrderItemSerializer
 
 
 class OrderListCreateView(generics.ListCreateAPIView):
@@ -73,3 +73,39 @@ def pay_order(request, pk):
         "status": "success",
         "transaction_id": order.payment_transaction_id
     })
+
+
+class OrderItemListView(generics.ListAPIView):
+    serializer_class = OrderItemSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return OrderItem.objects.all().select_related('order', 'product')
+        return OrderItem.objects.filter(order__user=user).select_related('order', 'product')
+
+    @swagger_auto_schema(
+        operation_description="Получить список позиций заказов",
+        responses={200: OrderItemSerializer(many=True)}
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+
+class OrderItemDetailView(generics.RetrieveAPIView):
+    serializer_class = OrderItemSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return OrderItem.objects.all().select_related('order', 'product')
+        return OrderItem.objects.filter(order__user=user).select_related('order', 'product')
+
+    @swagger_auto_schema(
+        operation_description="Получить детали позиции заказа",
+        responses={200: OrderItemSerializer()}
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
